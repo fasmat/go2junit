@@ -38,7 +38,6 @@ go2junit test -h
 
 ## Open points
 
-* Add CI to github actions
 * Add reference data from diverse test runs of different projects
 * Handle non-trivial cases that might not be handled yet
 * Improve documentation
