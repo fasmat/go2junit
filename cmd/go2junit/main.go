@@ -11,7 +11,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/go2junit/types"
+	"go2junit/types"
 )
 
 func main() {
