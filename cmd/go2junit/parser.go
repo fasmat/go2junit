@@ -6,9 +6,10 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"go2junit/types"
 	"io"
 	"strconv"
+
+	"github.com/fasmat/go2junit/types"
 )
 
 func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {

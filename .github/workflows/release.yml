@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go 1.17
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17.x"
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: latest
+          args: release --rm-dist

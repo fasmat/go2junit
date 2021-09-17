@@ -7,13 +7,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var Version string = "development"
+var version string = "v0.1.0"
 
 func main() {
 	app := cli.NewApp()
 	app.Usage = "convert go test output to junit xml!"
 	app.EnableBashCompletion = true
-	app.Version = Version
+	app.Version = version
 	app.Commands = []*cli.Command{
 		{
 			Name:   "parse",

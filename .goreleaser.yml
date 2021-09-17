@@ -1,0 +1,36 @@
+builds:
+  - main: ./cmd/go2junit
+    binary: go2junit
+    ldflags:
+      - -s -w -X "github.com/fasmat/go2junit/cmd/go2junit/main.version={{ .Version }}"
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - 386
+archives:
+  - name_template: "go2junit_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    replacements:
+      amd64: x86_64
+      "386": i386
+      darwin: macOS
+      linux: lin
+      windows: win
+    format_overrides:
+      - goos: windows
+        format: zip
+release:
+  header: |
+    ## {{ .Date }} go2junit {{ .Tag }}
+checksum:
+  name_template: checksums.txt
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
