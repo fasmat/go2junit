@@ -16,8 +16,13 @@
 		"--security-opt",
 		"seccomp=unconfined"
 	],
+	"mounts": [
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,destination=/home/vscode/.ssh,type=bind,readonly",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,destination=/root/.ssh,type=bind,readonly"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
+		"editor.formatOnSave": true,
 		"go.toolsManagement.checkForUpdates": "local",
 		"go.useLanguageServer": true,
 		"go.gopath": "/go",
@@ -26,10 +31,12 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"streetsidesoftware.code-spell-checker",
+		"github.copilot",
 		"eamodio.gitlens",
 		"golang.Go",
 		"davidanson.vscode-markdownlint",
-		"redhat.vscode-xml"
+		"redhat.vscode-xml",
+		"redhat.vscode-yaml"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
