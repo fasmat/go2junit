@@ -19,4 +19,5 @@ go test -json ./path/to/pkg | go2junit > out.xml
 * [ ] Add multiple reference test runs from various projects
 * [ ] Handle non-trivial cases that might not be handled yet
 * [ ] Allow the use of go2junit as drop-in replacement for go test
+* [ ] Add license
 * [ ] Improve documentation
