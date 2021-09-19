@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var version string = "v0.1.0"
+var version string = "v0.3.1"
 
 func main() {
 	app := cli.NewApp()
@@ -30,9 +30,9 @@ func main() {
 					Aliases: []string{"o"},
 					Usage:   "write output to `FILE` (defaults to stdout if not set)",
 				},
-				&cli.StringFlag{
-					Name:    "fail",
-					Usage:   "return ",
+				&cli.BoolFlag{
+					Name:  "fail",
+					Usage: "return with a non-zero exit status in the case a parsed test failed",
 				},
 			},
 		},
