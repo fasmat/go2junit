@@ -38,7 +38,8 @@ func actionParse(c *cli.Context) error {
 	}
 	defer w.Close()
 
-	return parse(w, r, c.App.ErrWriter)
+	parse(w, r, c.Bool("fail"))
+	return nil
 }
 
 func actionTest(c *cli.Context) error {
@@ -48,13 +49,11 @@ func actionTest(c *cli.Context) error {
 	}
 	defer w.Close()
 
-	parseErrChan := make(chan error)
+	parseChan := make(chan error)
 	pipeReader, pipeWriter := io.Pipe()
 	go func() {
-		if err := parse(w, pipeReader, c.App.ErrWriter); err != nil {
-			parseErrChan <- err
-		}
-		close(parseErrChan)
+		parse(w, pipeReader, true)
+		close(parseChan)
 		pipeReader.Close()
 	}()
 
@@ -66,7 +65,7 @@ func actionTest(c *cli.Context) error {
 		cmd.Stdout = pipeWriter
 		cmd.Stderr = c.App.ErrWriter
 		err := cmd.Run()
-		
+
 		pipeWriter.Close()
 		if err != nil {
 			testErrChan <- err
@@ -74,9 +73,8 @@ func actionTest(c *cli.Context) error {
 		close(testErrChan)
 	}()
 
-	for err := range parseErrChan {
-		return err
-	}
+	<-parseChan
+
 	for err := range testErrChan {
 		return err
 	}

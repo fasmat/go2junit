@@ -5,14 +5,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"io"
+	"log"
+	"os"
 	"strconv"
 
 	"github.com/fasmat/go2junit/types"
 )
 
-func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {
+func parse(w io.Writer, r io.Reader, fail bool) {
 	scanner := bufio.NewScanner(r)
 
 	// suites -> suite
@@ -20,6 +21,9 @@ func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {
 
 	// suites -> suite -> testcase
 	cases := make(map[string]map[string]*types.Testcase)
+
+	// keeps track if any test failed
+	testfailed := false
 
 	for scanner.Scan() {
 		var event types.TestEvent
@@ -50,13 +54,14 @@ func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {
 			case "pass":
 				fallthrough
 			case "fail":
+				testfailed = true
 				fallthrough
 			case "skip":
 				suite.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 				continue
 			default:
-				fmt.Fprintf(errWriter, "unknown package action found:\n%+v\n", event)
-				return fmt.Errorf("failed to parse input, please report this error to github.com/fasmat/go2junit")
+				log.Printf("unknown package action found: %+v\n", event)
+				log.Fatal("failed to parse input, please report this error to github.com/fasmat/go2junit")
 			}
 		}
 
@@ -84,8 +89,8 @@ func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {
 				MessageAttr: "test failed",
 			}
 		default:
-			fmt.Fprintf(errWriter, "unknown test action found: %+v\n", event)
-			return fmt.Errorf("failed to parse input, please report this error to github.com/fasmat/go2junit")
+			log.Printf("unknown test action found: %+v\n", event)
+			log.Fatal("failed to parse input, please report this error to github.com/fasmat/go2junit")
 		}
 	}
 
@@ -116,5 +121,12 @@ func parse(w io.Writer, r io.Reader, errWriter io.Writer) error {
 	testsuites.TestsAttr = strconv.Itoa(testtotal)
 	testsuites.ErrorsAttr = strconv.Itoa(errortotal)
 
-	return xml.NewEncoder(w).Encode(testsuites)
+	if err := xml.NewEncoder(w).Encode(testsuites); err != nil {
+		log.Println("failed to encode xml")
+		log.Fatal(err)
+	}
+
+	if fail && testfailed {
+		os.Exit(1)
+	}
 }
