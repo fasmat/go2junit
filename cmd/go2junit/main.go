@@ -30,6 +30,10 @@ func main() {
 					Aliases: []string{"o"},
 					Usage:   "write output to `FILE` (defaults to stdout if not set)",
 				},
+				&cli.StringFlag{
+					Name:    "fail",
+					Usage:   "return ",
+				},
 			},
 		},
 		{
