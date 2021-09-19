@@ -51,10 +51,10 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 			case "output":
 				suite.Systemout.Text += event.Output
 				continue
-			case "pass":
-				fallthrough
 			case "fail":
 				testfailed = true
+				fallthrough
+			case "pass":
 				fallthrough
 			case "skip":
 				suite.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
