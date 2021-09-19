@@ -87,6 +87,7 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 			testcase.Error = &types.Error{
 				TypeAttr:    "Error",
 				MessageAttr: "test failed",
+				Text:        testcase.Systemout.Text,
 			}
 		default:
 			log.Printf("unknown test action found: %+v\n", event)

@@ -17,6 +17,7 @@ type Error struct {
 	XMLName     xml.Name `xml:"error"`
 	TypeAttr    string   `xml:"type,attr,omitempty"`
 	MessageAttr string   `xml:"message,attr,omitempty"`
+	Text        string   `xml:",cdata"`
 }
 
 type Skipped struct {
