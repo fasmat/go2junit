@@ -11,6 +11,7 @@ type Failure struct {
 	XMLName     xml.Name `xml:"failure"`
 	TypeAttr    string   `xml:"type,attr,omitempty"`
 	MessageAttr string   `xml:"message,attr,omitempty"`
+	Text        string   `xml:",cdata"`
 }
 
 type Error struct {
