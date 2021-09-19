@@ -83,8 +83,9 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 		case "pass":
 			testcase.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 		case "fail":
+			testfailed = true
 			testcase.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
-			testcase.Error = &types.Error{
+			testcase.Failure = &types.Failure{
 				TypeAttr:    "Error",
 				MessageAttr: "test failed",
 				Text:        testcase.Systemout.Text,
