@@ -99,10 +99,13 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 	testsuites := &types.Testsuites{}
 	testtotal := 0
 	errortotal := 0
+	failtotal := 0
 
 	for _, s := range suites {
 		testcount := 0
 		errorcount := 0
+		failcount := 0
+		skipcount := 0
 		for _, c := range cases[s.NameAttr] {
 			s.Testcase = append(s.Testcase, c)
 			testcount++
@@ -110,18 +113,30 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 			if c.Error != nil {
 				errorcount++
 			}
+
+			if c.Failure != nil {
+				failcount++
+			}
+
+			if c.Skipped != nil {
+				skipcount++
+			}
 		}
 
 		s.TestsAttr = strconv.Itoa(testcount)
 		s.ErrorsAttr = strconv.Itoa(errorcount)
+		s.FailuresAttr = strconv.Itoa(failcount)
+		s.SkippedAttr = strconv.Itoa(skipcount)
 
 		testsuites.Testsuite = append(testsuites.Testsuite, s)
-		testtotal += testcount
+		testtotal += testcount + skipcount
 		errortotal += errorcount
+		failtotal += failcount
 	}
 
 	testsuites.TestsAttr = strconv.Itoa(testtotal)
 	testsuites.ErrorsAttr = strconv.Itoa(errortotal)
+	testsuites.FailuresAttr = strconv.Itoa(failtotal)
 
 	if err := xml.NewEncoder(w).Encode(testsuites); err != nil {
 		log.Println("failed to encode xml")
