@@ -38,6 +38,6 @@ go2junit test -h
 
 ## Open points
 
+* Extend README with more examples (cover all cli arguments)
+* Add unit tests
 * Add reference data from diverse test runs of different projects
-* Handle non-trivial cases that might not be handled yet
-* Improve documentation
