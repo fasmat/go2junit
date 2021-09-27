@@ -13,7 +13,7 @@ import (
 	"github.com/fasmat/go2junit/types"
 )
 
-func parse(w io.Writer, r io.Reader, fail bool) {
+func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 	scanner := bufio.NewScanner(r)
 
 	// suites -> suite
@@ -50,6 +50,9 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 			switch event.Action {
 			case "output":
 				suite.Systemout.Text += event.Output
+				if _, err := p.Write([]byte(event.Output)); err != nil {
+					log.Fatalf("error printing test package output: %v", err)
+				}
 				continue
 			case "fail":
 				testfailed = true
@@ -80,6 +83,9 @@ func parse(w io.Writer, r io.Reader, fail bool) {
 			continue
 		case "output":
 			testcase.Systemout.Text += event.Output
+			if _, err := p.Write([]byte(event.Output)); err != nil {
+				log.Fatalf("error printing test event output: %v", err)
+			}
 		case "pass":
 			testcase.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 		case "fail":

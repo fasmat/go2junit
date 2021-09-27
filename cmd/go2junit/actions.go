@@ -26,33 +26,57 @@ func getWriter(name string) (io.WriteCloser, error) {
 }
 
 func actionParse(c *cli.Context) error {
-	r, err := getReader(c.String("input"))
+	var writer io.Writer
+	var printer io.Writer = io.Discard
+
+	reader, err := getReader(c.String("input"))
 	if err != nil {
 		return fmt.Errorf("error opening input file: %w", err)
 	}
-	defer r.Close()
+	defer reader.Close()
 
 	w, err := getWriter(c.String("output"))
 	if err != nil {
 		return fmt.Errorf("error opening input file: %w", err)
 	}
+	writer = w
 	defer w.Close()
 
-	parse(w, r, c.Bool("fail"))
+	if c.Bool("print") {
+		printer = os.Stdout
+	}
+
+	if c.Bool("print") && writer == os.Stdout {
+		writer = io.Discard
+	}
+
+	parse(writer, reader, printer, c.Bool("fail"))
 	return nil
 }
 
 func actionTest(c *cli.Context) error {
+	var writer io.Writer
+	var printer io.Writer = io.Discard
+
 	w, err := getWriter(c.String("output"))
 	if err != nil {
 		return fmt.Errorf("error opening input file: %w", err)
 	}
+	writer = w
 	defer w.Close()
+
+	if c.Bool("print") {
+		printer = os.Stdout
+	}
+
+	if c.Bool("print") && writer == os.Stdout {
+		writer = io.Discard
+	}
 
 	parseChan := make(chan error)
 	pipeReader, pipeWriter := io.Pipe()
 	go func() {
-		parse(w, pipeReader, true)
+		parse(writer, pipeReader, printer, true)
 		close(parseChan)
 		pipeReader.Close()
 	}()

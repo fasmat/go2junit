@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var version string = "v0.3.3"
+var version string = "v0.4.0"
 
 func main() {
 	app := cli.NewApp()
@@ -31,6 +31,11 @@ func main() {
 					Usage:   "write output to `FILE` (defaults to stdout if not set)",
 				},
 				&cli.BoolFlag{
+					Name:    "print",
+					Aliases: []string{"p"},
+					Usage:   "print test log to stdout, requires --output to be set or junit report will be discarded",
+				},
+				&cli.BoolFlag{
 					Name:  "fail",
 					Usage: "return with a non-zero exit status in the case a parsed test failed",
 				},
@@ -47,6 +52,11 @@ func main() {
 					Name:    "output",
 					Aliases: []string{"o"},
 					Usage:   "write output to `FILE` (defaults to stdout if not set)",
+				},
+				&cli.BoolFlag{
+					Name:    "print",
+					Aliases: []string{"p"},
+					Usage:   "print test log to stdout, requires --output to be set or junit report will be discarded",
 				},
 			},
 		},
