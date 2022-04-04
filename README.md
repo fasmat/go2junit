@@ -20,6 +20,19 @@ By default `go2junit` will read from stdin and write to stdout. You can also spe
 
 ```bash
 go2junit parse -h
+
+NAME:
+   go2junit parse - parse input from `FILE` (defaults to stdin if not set)
+
+USAGE:
+   go2junit parse [command options] [arguments...]
+
+OPTIONS:
+   --input FILE, -i FILE   parse input from FILE (defaults to stdin if not set)
+   --output FILE, -o FILE  write output to FILE (defaults to stdout if not set)
+   --print, -p             print test log to stdout, requires --output to be set or junit report will be discarded (default: false)
+   --fail                  return with a non-zero exit status in the case a parsed test failed (default: false)
+   --help, -h              show help (default: false)
 ```
 
 ## How to use go2junit as your test runner
@@ -34,10 +47,22 @@ Again by default `go2junit` will write to stdout. You can alter that behavior an
 
 ```bash
 go2junit test -h
+
+NAME:
+   go2junit test - execute go test and output result as junit xml report
+
+USAGE:
+   go2junit test -- [arguments...]
+   
+      the test subcommand executes 'go test' with the given arguments and directly converts its output to junit xml
+
+OPTIONS:
+   --output FILE, -o FILE  write output to FILE (defaults to stdout if not set)
+   --print, -p             print test log to stdout, requires --output to be set or junit report will be discarded (default: false)
+   --help, -h              show help (default: false)
 ```
 
 ## Open points
 
-* Extend README with more examples (cover all cli arguments)
 * Add unit tests
 * Add reference data from diverse test runs of different projects
