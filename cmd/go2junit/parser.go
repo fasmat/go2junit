@@ -63,8 +63,8 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 				suite.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 				continue
 			default:
-				log.Printf("unknown package action found: %+v\n", event)
-				log.Fatal("failed to parse input, please report this error to github.com/fasmat/go2junit")
+				log.Printf("unknown package action found: %+v\n"+
+					"If you believe this is an error, please report to github.com/fasmat/go2junit", event)
 			}
 		}
 
@@ -97,8 +97,8 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 				Text:        testcase.Systemout.Text,
 			}
 		default:
-			log.Printf("unknown test action found: %+v\n", event)
-			log.Fatal("failed to parse input, please report this error to github.com/fasmat/go2junit")
+			log.Printf("unknown package action found: %+v\n"+
+				"If you believe this is an error, please report to github.com/fasmat/go2junit", event)
 		}
 	}
 
