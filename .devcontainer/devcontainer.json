@@ -1,5 +1,5 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.217.4/containers/docker-from-docker-compose
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.217.4/containers/go
 {
 	"name": "Go",
 	"build": {
@@ -39,7 +39,7 @@
 		"davidanson.vscode-markdownlint",
 		"redhat.vscode-xml",
 		"redhat.vscode-yaml"
-  ],
+	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

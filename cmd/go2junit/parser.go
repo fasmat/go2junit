@@ -64,7 +64,7 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 				continue
 			default:
 				log.Printf("unknown package action found: %+v\n"+
-					"If you believe this is an error, please report to github.com/fasmat/go2junit", event)
+					"If you believe this is an error please report to github.com/fasmat/go2junit", event)
 			}
 		}
 
@@ -98,7 +98,7 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 			}
 		default:
 			log.Printf("unknown package action found: %+v\n"+
-				"If you believe this is an error, please report to github.com/fasmat/go2junit", event)
+				"If you believe this is an error please report to github.com/fasmat/go2junit", event)
 		}
 	}
 
