@@ -22,17 +22,6 @@ jobs:
         with:
           go-version: ${{ env.go-version }}
 
-      - name: Cache go dependencies
-        uses: actions/cache@v3
-        id: go-cache
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
       - name: Build application
         run: go build -v ./...
 
@@ -46,17 +35,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ env.go-version }}
-
-      - name: Cache go dependencies
-        uses: actions/cache@v3
-        id: go-cache
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
 
       - name: Run vet
         run: go vet ./...
