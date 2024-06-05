@@ -1,3 +1,4 @@
+version: 1
 builds:
   - main: ./cmd/go2junit
     binary: go2junit
@@ -9,15 +10,11 @@ builds:
       - windows
     goarch:
       - amd64
-      - 386
+      - "386"
+      - arm64
+
 archives:
   - name_template: "go2junit_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    replacements:
-      amd64: x86_64
-      "386": i386
-      darwin: macOS
-      linux: lin
-      windows: win
     format_overrides:
       - goos: windows
         format: zip
