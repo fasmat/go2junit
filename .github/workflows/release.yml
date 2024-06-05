@@ -31,5 +31,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          version: latest
-          args: release --rm-dist
+          version: v2.0.0
+          args: release --clean
