@@ -1,4 +1,4 @@
-version: 1
+version: 2
 builds:
   - main: ./cmd/go2junit
     binary: go2junit

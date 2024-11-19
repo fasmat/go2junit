@@ -57,13 +57,11 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 			case "fail":
 				testfailed = true
 				fallthrough
-			case "pass":
-				fallthrough
-			case "skip":
+			case "pass", "skip":
 				suite.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 				continue
 			default:
-				log.Printf("unknown package action found: %+v\n"+
+				log.Printf("unknown test action found: %+v\n"+
 					"If you believe this is an error please report to github.com/fasmat/go2junit", event)
 			}
 		}
@@ -78,8 +76,8 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 		testcase := testcases[event.Test]
 
 		switch event.Action {
-		case "run":
-			// only indicating that test is run
+		case "run", "pause", "cont", "start":
+			// only indicating that test is run or paused, but no result
 			continue
 		case "output":
 			testcase.Systemout.Text += event.Output
