@@ -12,16 +12,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-
       - name: Setup go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ env.go-version }}
-
+          check-latest: true
+          go-version-file: "go.mod"
       - name: Build application
         run: go build -v ./...
 
@@ -30,14 +28,13 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-
       - name: Setup go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ env.go-version }}
+          check-latest: true
+          go-version-file: "go.mod"
 
       - name: Run vet
         run: go vet ./...
-
       - name: Test application
         run: go test ./...

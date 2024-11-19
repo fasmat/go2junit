@@ -5,7 +5,7 @@ This tool is a small helper to convert the output of `go test` to a junit xml re
 ## How to install
 
 ```bash
-go install github.com/fasmat/go2junit/cmd/go2junit@latest
+go install github.com/fasmat/go2junit/cmd/go2junit@v0.4.5
 ```
 
 ## How to use the parser
