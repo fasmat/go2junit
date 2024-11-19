@@ -87,7 +87,7 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 			if _, err := p.Write([]byte(event.Output)); err != nil {
 				log.Fatalf("error printing test event output: %v", err)
 			}
-		case "pass":
+		case "pass", "skip":
 			testcase.TimeAttr = strconv.FormatFloat(event.Elapsed, 'f', 2, 64)
 		case "fail":
 			testfailed = true
