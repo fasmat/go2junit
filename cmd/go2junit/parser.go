@@ -54,6 +54,9 @@ func parse(w io.Writer, r io.Reader, p io.Writer, fail bool) {
 					log.Fatalf("error printing test package output: %v", err)
 				}
 				continue
+			case "start":
+				// only indicating that test is run, but no result
+				continue
 			case "fail":
 				testfailed = true
 				fallthrough
